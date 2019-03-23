@@ -19,8 +19,8 @@ conn = sqlite3.connect('data.db')
 db = conn.cursor()
 
 # TWILIO
-account_sid = '<INSERT ACCOUNT SID>'
-auth_token = '<INSERT AUTH TOKEN>'
+account_sid = 'AC8343d4dd93fafa41efe6325eeeb5b2dd'
+auth_token = '62280b30937320345c07b016e86a65c5'
 client = Client(account_sid, auth_token)
 
 if __name__ == '__main__':
