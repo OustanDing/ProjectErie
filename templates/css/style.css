@@ -8073,7 +8073,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-color: #ff5733;
+    background-color: #54FFDC;
     left: -15px;
     top: -5px;
     z-index: -1; }
@@ -8440,4 +8440,18 @@ h1, h2, h3, h4, h5, h6 {
 
 #ALIGNCENTER {
   text-align: center;
+}
+
+#algaeScore{
+  color: #218838;
+}
+
+#trashScore{
+  color: #7c6705;
+}
+
+.bigScore {
+  font-size: 4.2rem;
+  /* color: #17a2b8;*/
+  font-weight: 650;
 }

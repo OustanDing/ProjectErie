@@ -21,6 +21,35 @@
 
     <link rel="stylesheet" href="css/style.css">
     
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+    
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Month', 'Trash Score', 'Algae Score'],
+          ['Nov',  6.8,       5.5],
+          ['Dec',  7.5,      5.7],
+          ['Jan',  8.2,      6.3],
+          ['Feb',  7.7,      6.5],
+          ['Mar',  7.6,      6.2]
+        ]);
+
+        var options = {
+          title: 'Historical Lake Health',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
   </head>
   <body>
   
@@ -299,35 +328,36 @@
       <h2 class="site-heading text-black mb-5" id="ALIGNCENTER">The State of Our Lake</h2>
       <div class="container">
         <div class="row">
-          <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="col-lg-7 mb-5 mb-lg-0">
             <div class="img-border">
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
+              <img src="images/HEAT MAP PLACEHOLDER.jpg" alt="Image" class="img-fluid">
             </div>
           </div>
-          <div class="col-lg-6">
+          <div class="col-lg-5">
             <div class="row row-items">
               <div class="col-6">
-                <a href="#" class="d-flex text-center feature active p-4 mb-4 bg-white">
+                <a class="d-flex text-center feature active p-4 mb-4 bg-white">
                   <span class="align-self-center w-100">
                     <span class="d-block mb-3">
-                      <span class="flaticon-step-ladder display-3"></span>
+                      <span class="bigScore" id="trashScore"> 8.5 </span> <!-- class="flaticon-step-ladder display-3" -->
                     </span>
-                    <h3>Pool Decor</h3>
+                    <h3>Trash Score</h3>
                   </span>
                 </a>
               </div>
               <div class="col-6">
-                <a href="#" class="d-flex text-center feature active p-4 mb-4 bg-white">
+                <a class="d-flex text-center feature active p-4 mb-4 bg-white">
                   <span class="align-self-center w-100">
                     <span class="d-block mb-3">
-                      <span class="flaticon-sit-down display-3"></span>
+                        <span class="bigScore" id="algaeScore"> 5.3 </span>
                     </span>
-                    <h3>Seat Decor</h3>
+                    <h3>Algae Score</h3>
                   </span>
                 </a>
               </div>
             </div>
-            <div class="row row-items last">
+            <div id="curve_chart" ></div> <!-- style="width: 900px; height: 500px"-->
+            <!-- <div class="row row-items last">
               <div class="col-6">
                 <a href="#" class="d-flex text-center feature active p-4 mb-4 bg-white">
                   <span class="align-self-center w-100">
@@ -348,7 +378,7 @@
                   </span>
                 </a>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -429,6 +459,6 @@
   <script src="js/aos.js"></script>
 
   <script src="js/main.js"></script>
-    
+
   </body>
 </html>
