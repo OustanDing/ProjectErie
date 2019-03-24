@@ -16,7 +16,7 @@ app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_TYPE'] = 'filesystem'
 
 # DATABASE
-conn = sqlite3.connect('data.db')
+conn = sqlite3.connect('data.db', check_same_thread=False)
 db = conn.cursor()
 
 # TWILIO
@@ -34,12 +34,12 @@ def checkInt(i):
 
 # CALC DISTANCE BETWEEN 2 COORDINATE POINTS
 def calc(p1, p2):
-	p1split = p1.split(', ')
-	p2split = p2.split(', ')
-	x1 = p1split[0]
-	y1 = p1split[1]
-	x2 = p2split[0]
-	y2 = p2split[1]
+	p1split = p1.split(',')
+	p2split = p2.split(',')
+	x1 = float(p1split[0])
+	y1 = float(p1split[1])
+	x2 = float(p2split[0])
+	y2 = float(p2split[1])
 
 	xdist = (x2 - x1) * 111.32
 	ydist = (y2 - y1) * 110.57
@@ -97,7 +97,7 @@ def sms():
 			conn.commit()
 
 			resp = MessagingResponse()
-			resp.message('Added! {0} ({1} severity) at {2}'.format(entry['name'], entry['severity'], entry['location']))
+			resp.message('Added! {0} ({1} severity) at {2}'.format(entry['type'], entry['severity'], entry['location']))
 
 			return str(resp)
 
@@ -111,10 +111,10 @@ def sms():
 			resp.message('Search radius must be numeric.')
 			return str(resp)
 		else:
-			sendMsg = ''
+			sendMsg = '\n'
 			req = {
 				'location': requestedlist[1],
-				'radius': requestedlist[2]
+				'radius': float(requestedlist[2])
 			}
 
 			db.execute('SELECT * FROM points')
@@ -123,7 +123,7 @@ def sms():
 			validpoints = []
 			for point in points:
 				distance = calc(req['location'], point[3])
-				if distance <= radius:
+				if distance <= req['radius']:
 					validpoints.append({
 						'type': point[1],
 						'severity': point[2],
@@ -132,12 +132,20 @@ def sms():
 						})
 
 			for point in validpoints:
-				sendMsg += u'\u2022 ' + point['dist'] + 'm away at ' + point['location'] + ': ' + point['type'] + ', ' + point['severity'] + ' severity'
+				sendMsg += u'\u2022' + ' ' + point['dist'] + 'm away at ' + point['location'] + ': ' + point['type'] + ', ' + point['severity'] + ' severity'
 
-			message = client.message.create(
+			'''
+			resp = MessagingResponse()
+			resp.message(sendMsg)
+
+			return str(resp)
+
+			'''
+			message = client.messages.create(
 				to = number,
-				from_ = '<NUMBER>',
-				body = sendMessage)
+				from_ = '+16475591371',
+				body = sendMsg)
+			
 
 	else:
 		resp = MessagingResponse()
@@ -145,6 +153,10 @@ def sms():
 
 		return str(resp)
 
+	return render_template('index.html')
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
 	return render_template('index.html')
 
 if __name__ == '__main__':
