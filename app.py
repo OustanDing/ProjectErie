@@ -1,4 +1,4 @@
-import datetime, re, sqlite3, requests
+import datetime, re, sqlite3, requests, random
 from flask import *
 from tempfile import mkdtemp
 from twilio.rest import Client
@@ -220,20 +220,37 @@ def index():
 	pointdata = db.fetchall()
 	for point in pointdata:
 		markers.append({
-			'coords': {'lat': point[3].split(',')[0], 'lng': point[3].split(',')[1]},
+			'coords': {'lat': float(point[3].split(',')[0]), 'lng': float(point[3].split(',')[1])},
 			'content': point[3] + ': ' + point[1].title() + ', ' + point[2] + ' severity. Pinged by ' + users[point[0]]})
+
+	algae = round(random.random()*3+5, 1)
 
 	if reports != 0:
 		score2 = score/reports
 	else:
 		score2 = '-'
 
-	print(markers)
-	return render_template('index.html', score = score2, markerdata = markers)
+	return render_template('index.html', score = score2, markerdata = markers, algae = algae)
 
 @app.route('/map')
 def map():
-	return render_template('map.html')
+	# Retrieve users data
+	users = {}
+	db.execute('SELECT * FROM users')
+	userstemp = db.fetchall()
+
+	for user in userstemp:
+		users[user[0]] = user[1]
+
+	# Get data for map
+	markers = []
+	db.execute('SELECT * FROM points')
+	pointdata = db.fetchall()
+	for point in pointdata:
+		markers.append({
+			'coords': {'lat': float(point[3].split(',')[0]), 'lng': float(point[3].split(',')[1])},
+			'content': point[3] + ': ' + point[1].title() + ', ' + point[2] + ' severity. Pinged by ' + users[point[0]]})
+	return render_template('map.html', markerdata = markers)
 
 @app.route('/contact')
 def contact():

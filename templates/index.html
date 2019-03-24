@@ -17,7 +17,7 @@
           ['Dec',  7.5,      5.7],
           ['Jan',  8.2,      6.3],
           ['Feb',  7.7,      6.5],
-          ['Mar',  7.6,      6.2]
+          ['Mar',  '{{ score }}',      '{{ algae }}']
         ]);
         var options = {
           title: 'Historical Lake Health',
@@ -52,7 +52,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-6">
-            <a href="#" class="site-block-feature d-flex p-4 rounded mb-4">
+            <a href="/howto" class="site-block-feature d-flex p-4 rounded mb-4">
               <div class="mr-3">
                 <span class="icon flaticon-window font-weight-light h2"></span>
               </div>
@@ -63,7 +63,7 @@
             </a>   
           </div>
           <div class="col-lg-6">
-            <a href="#" class="site-block-feature d-flex p-4 rounded mb-4">
+            <a href="/map" class="site-block-feature d-flex p-4 rounded mb-4">
               <div class="mr-3">
                 <span class="icon flaticon-measuring font-weight-light h2"></span>
               </div>
@@ -143,7 +143,7 @@
                 <a class="d-flex text-center feature active p-4 mb-4 bg-white">
                   <span class="align-self-center w-100">
                     <span class="d-block mb-3">
-                        <span class="bigScore" id="algaeScore"> 5.3 </span>
+                        <span class="bigScore" id="algaeScore"> {{ algae }} </span>
                     </span>
                     <h3>Algae Score</h3>
                   </span>
@@ -166,21 +166,21 @@
         </div>
         <div class="row mb-5">
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 post-entry">
-            <a href="#" class="d-block figure">
+            <a  class="d-block figure">
               <img src="/static/images/Cleanup 1.jpg" alt="Image" class="img-fluid">
             </a>
             <span class="text-muted d-block mb-2">13, November 2018</span>
-            <h3><a href="#">The Pennsylvania Lake Erie International Coastal Cleanup</a></h3>
+            <h3><a >The Pennsylvania Lake Erie International Coastal Cleanup</a></h3>
           </div>
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 post-entry">
-            <a href="#" class="d-block figure">
+            <a class="d-block figure">
               <img src="/static/images/Cleanup 2.jpg" alt="Image" class="img-fluid">
             </a>
             <span class="text-muted d-block mb-2">18, January 2019</span>
-            <h3><a href="#">Cleaning up the beach: The lure of Lake Erie </a></h3>
+            <h3><a >Cleaning up the beach: The lure of Lake Erie </a></h3>
           </div>
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 post-entry">
-            <a href="#" class="d-block figure">
+            <a  class="d-block figure">
               <img src="/static/images/Cleanup 3.JPG" alt="Image" class="img-fluid">
             </a>
             <span class="text-muted d-block mb-2">23, February 2019</span>
@@ -190,7 +190,7 @@
         </div>
         <div class="row mt-5 text-center">
           <div class="col-12">
-            <p><a href="#" class="btn btn-primary btn-lg rounded-0">View All Posts</a></p>
+            <p><a  class="btn btn-primary btn-lg rounded-0">View All Posts</a></p>
           </div>
         </div>
       </div>
@@ -210,35 +210,31 @@
           // Array of markers
           var markers = JSON.parse('{{ markerdata | tojson | safe }}');
           console.log(markers);
+          
+          var heatmapData = [];
 
           // Loop through markers
-          for(var i = 0;i < markers.length;i++){
+          for(var i = 0; i < markers.length; i++){
             // Add marker
-            addMarker(markers[i]);
+            addMarker(markers[i], heatmapData);
           }
-    
+
           // Add Marker Function
-          function addMarker(props){
-            var marker = new google.maps.Marker({
-              position:props.coords,
-              map:map,
-            });
-            // Check content
-            if(props.content){
-              var infoWindow = new google.maps.InfoWindow({
-                content:props.content
-              });
-    
-              marker.addListener('click', function(){
-                infoWindow.open(map, marker); 
-              });
-            }
+          function addMarker(props, heatmapData){
+            // var marker = new google.maps.Marker({
+              heatmapData.push(props.coords);
+              console.log (heatmapData);
           }
+          var heatmap = new google.maps.visualization.HeatmapLayer({
+            data:heatmapData,
+            dissipating: false,
+            map: map
+          });
         }
       </script>
     
       <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOu4NPK-hWvyMx5bNCrOOvP2HXehwGCok&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOu4NPK-hWvyMx5bNCrOOvP2HXehwGCok&callback=initMap&libraries=visualization">
         </script>
 
 {% endblock %}

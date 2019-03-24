@@ -3,65 +3,87 @@
 {% block title %}
   Map
 {% endblock %}
+{% block extra %}
+    <style type="text/css">
+      #map {
+        height: 600px;
+        width: 100%;
+      }
+      .bottomMargin {
+        padding-bottom: 100px;
+      }
+      h2 {
+        text-align: center;
+      }
+    </style>
+{% endblock %}
+
 {% block main %}
     <div class="site-blocks-cover overlay inner-page" style="background-image: url(/static/images/hero_bg_1.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-10">
             <span class="sub-text">Our Awesome</span>
-            <h1>Projects</h1>
+            <h1>Trash Tracker</h1>
           </div>
         </div>
       </div>
     </div>  
 
     <div class="site-section">
+      <h2>The Past 24 Hours of Trash Sightings on Lake Erie</h2>
       <div class="container">
-        <div class="row">
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="/static/images/img_1.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Project Name 1</a></h3>
-            <span class="text-muted">Interior</span>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="/static/images/img_2.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Project Name 2</a></h3>
-            <span class="text-muted">Design</span>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="/static/images/img_3.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Project Name 3</a></h3>
-            <span class="text-muted">Interior</span>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="/static/images/img_1.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Project Name 1</a></h3>
-            <span class="text-muted">Interior</span>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="/static/images/img_2.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Project Name 2</a></h3>
-            <span class="text-muted">Design</span>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="/static/images/img_3.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Project Name 3</a></h3>
-            <span class="text-muted">Interior</span>
+         <div class="row">
+            <div class="col-lg-12 mb-0 mb-lg-0">
+            <div id="map"></div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+        
+        <div class="bottomMargin"> </div>
+
+     <script>
+        function initMap(){
+          // Map options
+          var options = {
+            zoom:8,
+            center:{lat:42.0669,lng:-81.3399}
+          }
+    
+          // New map
+          var map = new google.maps.Map(document.getElementById('map'), options);
+
+          // Array of markers
+          var markers = JSON.parse('{{ markerdata | tojson | safe }}');
+          console.log(markers);
+
+          // Loop through markers
+          for(var i = 0; i < markers.length; i++){
+            // Add marker
+            addMarker(markers[i]);
+          }
+    
+          // Add Marker Function
+          function addMarker(props){
+            var marker = new google.maps.Marker({
+              position:props.coords,
+              map:map,
+            });
+            // Check content
+            if(props.content){
+              var infoWindow = new google.maps.InfoWindow({
+                content:props.content
+              });
+    
+              marker.addListener('click', function(){
+                infoWindow.open(map, marker); 
+              });
+            }
+          }
+        }
+      </script>
+    
+      <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOu4NPK-hWvyMx5bNCrOOvP2HXehwGCok&callback=initMap">
+        </script>
 {% endblock %}
