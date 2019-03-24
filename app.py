@@ -82,9 +82,11 @@ def sms():
 	requestedlist = requested.split(' ')
 	number = request.form['From']
 
-	print(requestedlist[0])
+	if requested.lower() == 'help':
+		resp = MessagingResponse()
+		resp.message('To report: report [type] [severity] [location]\n To query: query [location] [radius]')
 
-	if requestedlist[0].lower() == 'report':
+	elif requestedlist[0].lower() == 'report':
 		if len(requestedlist) != 4:
 			resp = MessagingResponse()
 			resp.message('Invalid format. Proper: report [type] [severity] [location]')
