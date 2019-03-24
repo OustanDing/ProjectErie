@@ -104,13 +104,15 @@ def sms():
 				'location': requestedlist[3]
 			}
 
+			global reports
 			reports += 1
 
-			if 'severity' == 'LOW':
+			global score
+			if entry['severity'] == 'LOW':
 				score += 8
-			elif 'severity' == 'MID' or 'severity' == 'MEDIUM':
+			elif entry['severity'] == 'MID' or 'severity' == 'MEDIUM':
 				score += 5
-			elif 'severity' == 'HIGH':
+			elif entry['severity'] == 'HIGH':
 				score += 2
 
 			db.execute('INSERT INTO points VALUES (?, ?, ?, ?, ?)', (number, entry['type'], entry['severity'], entry['location'], datetime.now()))
@@ -182,7 +184,7 @@ def sms():
 
 		return str(resp)
 
-	return render_template('index.html')
+	return redirect(url_for('/'))
 
 @app.route('/delete')
 def delete():
@@ -191,7 +193,9 @@ def delete():
 	for point in points:
 		if datetime.now() - datetime.strptime(point[4], '%Y-%m-%d %H:%M:%S.%f') > timedelta(seconds=300):
 			db.execute('DELETE FROM points WHERE time = ?', (point[4],))
+			global reports
 			reports -= 1
+			global score
 			if point[2] == 'LOW':
 				score -= 8
 			elif point[2] == 'MEDIUM' or point[2] == 'MID':
@@ -200,9 +204,15 @@ def delete():
 				score -= 2
 	conn.commit()
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
-	return render_template('index.html')
+	print(score)
+	print(reports)
+	if reports != 0:
+		score2 = score/reports
+	else:
+		score2 = '-'
+	return render_template('index.html', score = score2)
 
 @app.route('/map')
 def map():
