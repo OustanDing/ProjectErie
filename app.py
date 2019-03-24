@@ -6,6 +6,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 from datetime import timedelta, date, datetime
 from operator import itemgetter
 from math import sqrt
+from threading import Timer
 
 # FLASK SETUP
 app = Flask(__name__)
@@ -81,6 +82,8 @@ def sms():
 	requestedlist = requested.split(' ')
 	number = request.form['From']
 
+	print(requestedlist[0])
+
 	if requestedlist[0].lower() == 'report':
 		if len(requestedlist) != 4:
 			resp = MessagingResponse()
@@ -99,6 +102,9 @@ def sms():
 			resp = MessagingResponse()
 			resp.message('Added! {0} ({1} severity) at {2}'.format(entry['type'], entry['severity'], entry['location']))
 
+			t = Timer(60.0, delete)
+			t.start()
+
 			return str(resp)
 
 	elif requestedlist[0].lower() == 'query':
@@ -111,7 +117,7 @@ def sms():
 			resp.message('Search radius must be numeric.')
 			return str(resp)
 		else:
-			sendMsg = '\n'
+			sendMsg = '\n\n'
 			req = {
 				'location': requestedlist[1],
 				'radius': float(requestedlist[2])
@@ -122,6 +128,8 @@ def sms():
 
 			validpoints = []
 			for point in points:
+				print(calc(req['location'], point[3]))
+				print(req['radius'])
 				distance = calc(req['location'], point[3])
 				if distance <= req['radius']:
 					validpoints.append({
@@ -132,7 +140,7 @@ def sms():
 						})
 
 			for point in validpoints:
-				sendMsg += u'\u2022' + ' ' + point['dist'] + 'm away at ' + point['location'] + ': ' + point['type'] + ', ' + point['severity'] + ' severity'
+				sendMsg += (u'\n\u2022' + ' ' + str(point['dist']) + ' m away at ' + point['location'] + ': ' + point['type'].title() + ', ' + point['severity'].upper() + ' severity')
 
 			'''
 			resp = MessagingResponse()
@@ -154,6 +162,15 @@ def sms():
 		return str(resp)
 
 	return render_template('index.html')
+
+@app.route('/delete')
+def delete():
+	db.execute('SELECT * FROM points')
+	points = db.fetchall()
+	for point in points:
+		if datetime.now() - datetime.strptime(point[4], '%Y-%m-%d %H:%M:%S.%f') > timedelta(seconds=60):
+			db.execute('DELETE FROM points WHERE time = ?', (point[4],))
+	conn.commit()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
