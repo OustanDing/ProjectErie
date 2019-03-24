@@ -1,4 +1,4 @@
-import datetime, re, sqlite3
+import datetime, re, sqlite3, requests
 from flask import *
 from tempfile import mkdtemp
 from twilio.rest import Client
@@ -24,6 +24,9 @@ db = conn.cursor()
 account_sid = 'AC8343d4dd93fafa41efe6325eeeb5b2dd'
 auth_token = '62280b30937320345c07b016e86a65c5'
 client = Client(account_sid, auth_token)
+
+# GOOGLE MAPS
+api_key = 'AIzaSyCOu4NPK-hWvyMx5bNCrOOvP2HXehwGCok'
 
 # CHECK INT FUNCTION
 def checkInt(i):
