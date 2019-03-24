@@ -8433,3 +8433,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .block-25 ul li a:hover .text .heading {
   color: #fff; }
+
+#HOWITWORKS {
+  text-align: center;
+}
