@@ -27,6 +27,7 @@ client = Client(account_sid, auth_token)
 
 # GOOGLE MAPS
 api_key = 'AIzaSyCOu4NPK-hWvyMx5bNCrOOvP2HXehwGCok'
+# url = 
 
 # CHECK INT FUNCTION
 def checkInt(i):

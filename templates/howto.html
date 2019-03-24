@@ -1,98 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>How To</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% extends "layout.html" %}
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+{% block title %}
+  How to
+{% endblock %}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datepicker.css') }}">
-    
-    
-    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-  
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/aos.css') }}">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    
-  </head>
-  <body>
-  
-  <div class="site-wrap">
-
-    <div class="site-mobile-menu">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div> <!-- .site-mobile-menu -->
-    
-    
-    <div class="site-navbar-wrap">
-      <div class="site-navbar-top">
-        <div class="container py-3">
-          <div class="row align-items-center">
-            <div class="col-6">
-              <a href="#" class="p-2 pl-0"><span class="icon-twitter"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-facebook"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-linkedin"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-instagram"></span></a>
-            </div>
-            <div class="col-6">
-              <div class="d-flex ml-auto">
-                <a href="#" class="d-flex align-items-center ml-auto mr-4">
-                  <span class="icon-phone mr-2"></span>
-                  <span class="d-none d-md-inline-block">+1 647 559 1371</span>
-                </a>
-                <a href="#" class="d-flex align-items-center">
-                  <span class="icon-envelope mr-2"></span>
-                  <span class="d-none d-md-inline-block">info@projecterie.com</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="site-navbar">
-        <div class="container py-1">
-          <div class="row align-items-center">
-            <div class="col-2">
-                <p id="date"></p>
-                <script type="text/javascript">
-                  n =  new Date();
-                  y = n.getFullYear();
-                  m = n.getMonth() + 1;
-                  d = n.getDate();
-                  document.getElementById("date").innerHTML = m + "/" + d + "/" + y;</script>
-            </div>
-            <div class="col-10">
-              <nav class="site-navigation text-right" role="navigation">
-                <div class="container">
-                  <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
-
-                  <ul class="site-menu js-clone-nav d-none d-lg-block">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active"><a href="howto.html">How To</a></li>
-                    <li><a href="map.html">Trash Map</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                  </ul>
-                </div>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="site-blocks-cover overlay inner-page" style="background-image: url(images/hero_bg_1.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+{% block main %}
+    <div class="site-blocks-cover overlay inner-page" style="background-image: url(/static/images/hero_bg_1.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container py-1">
         <div class="row align-items-center">
           <div class="col-md-10">
@@ -108,21 +21,21 @@
         <div class="row mb-5">
           <div class="col-lg-4 col-md-6 mb-5 post-entry">
             <a href="#" class="d-block figure">
-              <img src="images/garbageonwater.png" alt="Trash" class="img-fluid">
+              <img src="/static/images/garbageonwater.png" alt="Trash" class="img-fluid">
             </a>
             <h2>Step 1:</h2>
             <h3><a href="#">Spot the trash</a></h3>
           </div>
           <div class="col-lg-4 col-md-6 mb-5 post-entry">
             <a href="#" class="d-block figure">
-              <img src="images/text-messaging.jpg" alt="Text Us" class="img-fluid">
+              <img src="/static/images/text-messaging.jpg" alt="Text Us" class="img-fluid">
             </a>
             <h2>Step 2:</h2>
             <h3><a href="#">Text ProjectErie at +1-647-559-1371 and use the keyword 'report' followed by the 'type', 'severity' and 'location' properties each separated by a space</a></h3>
           </div>
           <div class="col-lg-4 col-md-6 mb-5 post-entry">
             <a href="#" class="d-block figure">
-              <img src="images/checklist.jpg" alt="Describe the issue" class="img-fluid">
+              <img src="/static/images/checklist.jpg" alt="Describe the issue" class="img-fluid">
             </a>
             <h2>Step 3:</h2>
             <h3><a href="#">Our server accepts the following options for the properties: "report (trash/algae) (LOW/MID/HIGH) ±#.##,±#.##"</a></h3>
@@ -139,21 +52,21 @@
           <div class="row mb-5">
             <div class="col-lg-4 col-md-6 mb-5 post-entry">
               <a href="#" class="d-block figure">
-                <img src="images/text-messaging.jpg" alt="Trash" class="img-fluid">
+                <img src="/static/images/text-messaging.jpg" alt="Trash" class="img-fluid">
               </a>
               <h2>Step 1:</h2>
               <h3><a href="#">Text ProjectErie at +1-647-559-1371 with format "query [coordinates] [search_radius]"</a></h3>
             </div>
             <div class="col-lg-4 col-md-6 mb-5 post-entry">
               <a href="#" class="d-block figure">
-                <img src="images/notification1.jpg" alt="Text Us" class="img-fluid">
+                <img src="/static/images/notification1.jpg" alt="Text Us" class="img-fluid">
               </a>
               <h2>Step 2:</h2>
               <h3><a href="#">Receive a text containing the closest recent report within your search radius in the format "[distance] [coordinates] [type] [severity]" </a></h3>
             </div>
             <div class="col-lg-4 col-md-6 mb-5 post-entry">
               <a href="#" class="d-block figure">
-                <img src="images/hunting.jpg" alt="Describe the issue" class="img-fluid">
+                <img src="/static/images/hunting.jpg" alt="Describe the issue" class="img-fluid">
               </a>
               <h2>Step 3:</h2>
               <h3><a href="#">Happy Hunting!</a></h3>
@@ -161,44 +74,4 @@
           </div>
         </div>
       </div>
-
-    
-
-    <footer class="site-footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4 mb-5 mb-lg-0">
-            <div class="row mb-5">
-              <div class="col-md-12">
-                <h3 class="footer-heading mb-4">Navigation</h3>
-              </div>
-              <div class="col-md-6 col-lg-6">
-                <ul class="list-unstyled">
-                  <li><a href="index.html">Home</a></li>
-                  <li><a href="howto.html">How To</a></li>
-                  <li><a href="map.html">Trash Map</a></li>
-                  <li><a href="contact.html">Contact Us</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-      </div>
-    </footer>
-  </div>
-
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.countdown.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/bootstrap-datepicker.min.js"></script>
-  <script src="js/aos.js"></script>
-
-  <script src="js/main.js"></script>
-    
-  </body>
-</html>
+{% endblock %}
