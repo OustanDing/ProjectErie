@@ -49,6 +49,9 @@ def calc(p1, p2):
 
 	return dist
 
+reports = 0
+score = 0
+
 # SMS RESPONSE
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():
@@ -61,21 +64,18 @@ def sms():
 		data.append({
 			'phone': point[0],
 			'type': point[1],
-			'severity': point[2],
+			'severity': point[2].upper(),
 			'location': point[3],
 			'time': point[4]
 			})
 
 	# Retrieve users data
-	users = []
+	users = {}
 	db.execute('SELECT * FROM users')
 	userstemp = db.fetchall()
 
 	for user in userstemp:
-		users.append({
-			'phone': user[0],
-			'name': user[1]
-			})
+		users[user[0]] = user[1]
 
 	# Retrieve SMS info
 	requested = request.form['Body']
@@ -100,13 +100,22 @@ def sms():
 				'location': requestedlist[3]
 			}
 
+			reports += 1
+
+			if 'severity' == 'LOW':
+				score += 8
+			elif 'severity' == 'MID' or 'severity' == 'MEDIUM':
+				score += 5
+			elif 'severity' == 'HIGH':
+				score += 2
+
 			db.execute('INSERT INTO points VALUES (?, ?, ?, ?, ?)', (number, entry['type'], entry['severity'], entry['location'], datetime.now()))
 			conn.commit()
 
 			resp = MessagingResponse()
 			resp.message('Added! {0} ({1} severity) at {2}'.format(entry['type'], entry['severity'], entry['location']))
 
-			t = Timer(60.0, delete)
+			t = Timer(300.0, delete)
 			t.start()
 
 			return str(resp)
@@ -121,7 +130,7 @@ def sms():
 			resp.message('Search radius must be numeric.')
 			return str(resp)
 		else:
-			sendMsg = '\n\n'
+			sendMsg = ''
 			req = {
 				'location': requestedlist[1],
 				'radius': float(requestedlist[2])
@@ -137,6 +146,7 @@ def sms():
 				distance = calc(req['location'], point[3])
 				if distance <= req['radius']:
 					validpoints.append({
+						'number': point[0],
 						'type': point[1],
 						'severity': point[2],
 						'location': point[3],
@@ -144,7 +154,10 @@ def sms():
 						})
 
 			for point in validpoints:
-				sendMsg += (u'\n\u2022' + ' ' + str(point['dist']) + ' m away at ' + point['location'] + ': ' + point['type'].title() + ', ' + point['severity'].upper() + ' severity')
+				sendMsg += (u'\n\u2022' + ' ' + str(point['dist']) + ' m away at ' + point['location'] + ': ' + point['type'].title() + ', ' + point['severity'] + ' severity. Pinged by ' + users[point['number']])
+
+			if sendMsg == '':
+				sendMsg = 'No matching queries.'
 
 			'''
 			resp = MessagingResponse()
@@ -172,8 +185,15 @@ def delete():
 	db.execute('SELECT * FROM points')
 	points = db.fetchall()
 	for point in points:
-		if datetime.now() - datetime.strptime(point[4], '%Y-%m-%d %H:%M:%S.%f') > timedelta(seconds=60):
+		if datetime.now() - datetime.strptime(point[4], '%Y-%m-%d %H:%M:%S.%f') > timedelta(seconds=300):
 			db.execute('DELETE FROM points WHERE time = ?', (point[4],))
+			reports -= 1
+			if point[2] == 'LOW':
+				score -= 8
+			elif point[2] == 'MEDIUM' or point[2] == 'MID':
+				score -= 5
+			elif point[2] == 'HIGH':
+				score -= 2
 	conn.commit()
 
 @app.route('/', methods=['GET', 'POST'])
