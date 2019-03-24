@@ -210,31 +210,33 @@
           // Array of markers
           var markers = JSON.parse('{{ markerdata | tojson | safe }}');
           console.log(markers);
-          
-          var heatmapData = [];
 
           // Loop through markers
           for(var i = 0; i < markers.length; i++){
             // Add marker
-            addMarker(markers[i], heatmapData);
+            addMarker(markers[i]);
           }
 
           // Add Marker Function
-          function addMarker(props, heatmapData){
-            // var marker = new google.maps.Marker({
-              heatmapData.push(props.coords);
-              console.log (heatmapData);
-          }
-          var heatmap = new google.maps.visualization.HeatmapLayer({
-            data:heatmapData,
-            dissipating: false,
-            map: map
-          });
-        }
+          function addMarker(props){
+            var marker = new google.maps.Marker({
+              position:props.coords,
+              map:map,
+            });
+            // Check content
+            if(props.content){
+              var infoWindow = new google.maps.InfoWindow({
+                content:props.content
+              });
+    
+              marker.addListener('click', function(){
+                infoWindow.open(map, marker); 
+              });
+            }}}
       </script>
     
       <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOu4NPK-hWvyMx5bNCrOOvP2HXehwGCok&callback=initMap&libraries=visualization">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOu4NPK-hWvyMx5bNCrOOvP2HXehwGCok&callback=initMap">
         </script>
 
 {% endblock %}

@@ -15,7 +15,30 @@
       h2 {
         text-align: center;
       }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+      #floating-panel {
+        background-color: #fff;
+        border: 1px solid #999;
+        left: 25%;
+        padding: 5px;
+        position: absolute;
+        top: 10px;
+        z-index: 5;
+      }
     </style>
+
 {% endblock %}
 
 {% block main %}
@@ -53,44 +76,32 @@
           // New map
           var map = new google.maps.Map(document.getElementById('map'), options);
 
-          heatmap = new google.maps.visualization.HeatmapLayer({
-            data: getPoints(),
-            map: map
-          });
-
-          heatmap.setMap(heatmap.getMap() ? null : map);
-
           // Array of markers
           var markers = JSON.parse('{{ markerdata | tojson | safe }}');
           console.log(markers);
 
+          var heatmapData = [];
+
           // Loop through markers
           for(var i = 0; i < markers.length; i++){
             // Add marker
-            addMarker(markers[i]);
+            var coords = markers[i].coords;
+            var latLng = new google.maps.LatLng(coords.lat, coords.lng);
+            console.log(latLng);
+            heatmapData.push(latLng);
+            // addMarker(markers[i]);
           }
-    
-          // Add Marker Function
-          function addMarker(props){
-            var marker = new google.maps.Marker({
-              position:props.coords,
-              map:map,
-            });
-            // Check content
-            if(props.content){
-              var infoWindow = new google.maps.InfoWindow({
-                content:props.content
-              });
-    
-              marker.addListener('click', function(){
-                infoWindow.open(map, marker); 
-              });
-            }
-          }
+          console.log(heatmapData);
+          var heatmap = new google.maps.visualization.HeatmapLayer({
+            data: heatmapData,
+            dissipating: true,
+            map: map,
+            radius: 40
+          });
         }
       </script>
     
       <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOu4NPK-hWvyMx5bNCrOOvP2HXehwGCok&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOu4NPK-hWvyMx5bNCrOOvP2HXehwGCok&libraries=visualization&callback=initMap">
         </script>
 {% endblock %}
