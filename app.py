@@ -206,13 +206,28 @@ def delete():
 
 @app.route('/')
 def index():
-	print(score)
-	print(reports)
+	# Retrieve users data
+	users = {}
+	db.execute('SELECT * FROM users')
+	userstemp = db.fetchall()
+
+	for user in userstemp:
+		users[user[0]] = user[1]
+	
+	# Get data for map
+	markers = []
+	db.execute('SELECT * FROM points')
+	pointdata = db.fetchall()
+	for point in pointdata:
+		markers.append([point[3] + ': ' + point[1].title() + ', ' + point[2] + ' severity. Pinged by ' + users[point[0]], point[3].split(',')[0], point[3].split(',')[1]])
+
 	if reports != 0:
 		score2 = score/reports
 	else:
 		score2 = '-'
-	return render_template('index.html', score = score2)
+
+	print(markers)
+	return render_template('index.html', score = score2, markerdata = markers)
 
 @app.route('/map')
 def map():
