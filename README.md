@@ -2,7 +2,7 @@
 ## Inspiration
 Often trash cleanups are efforts made on shore, ignoring the masses of garbage floating in the middle of lakes and oceans. This doesn't just look bad, but affects the quality of water and the ecosystem of the body of water. Additionally we decided that algae blooms should be another point of focus due to their potential to spread and destroy ecosystems. These issues are especially prominent in Lake Erie, which was our main focus, having previous occurrences of algae blooms and of course, unwanted trash (it should be alarming that this is so common that it's a given). We wanted to provide the public not only a way to evaluate the magnitude of the problem at hand, but also a platform for them to contribute towards fixing this problem. 
 ## What it does
-The app allows the users to crowdsource information about the current state of a body of water by providing details on locations of unwanted trash or algae blooms.
+The app allows the users to crowdsource information about the current state of a body of water by providing details on locations of unwanted trash or algae blooms along with the severity. The platform we created also serves as an educational tool that informs the public of the actual state that our lakes are in and providing data for others who want to process the data in their own way.
 ## How we built it
 A flask app using html, css, and javascript for the frontend. 
 ## Challenges we ran into
