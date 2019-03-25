@@ -21,12 +21,12 @@ conn = sqlite3.connect('data.db', check_same_thread=False)
 db = conn.cursor()
 
 # TWILIO
-account_sid = 'AC8343d4dd93fafa41efe6325eeeb5b2dd'
-auth_token = '62280b30937320345c07b016e86a65c5'
+account_sid = '{INSERT_TWILIO_SID_HERE}'
+auth_token = '{INSERT_TWILIO_AUTH_TOKEN_HERE}'
 client = Client(account_sid, auth_token)
 
 # GOOGLE MAPS
-api_key = 'AIzaSyCOu4NPK-hWvyMx5bNCrOOvP2HXehwGCok'
+api_key = '{INSERT_GOOGLE_MAPS_API_KEY_HERE}'
 # url = 
 
 # CHECK INT FUNCTION
