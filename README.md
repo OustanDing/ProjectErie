@@ -4,8 +4,7 @@ Often trash cleanups are efforts made on shore, ignoring the masses of garbage f
 
 _Our Landing Page_
 <img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/784/853/datas/gallery.jpg" alt="Project Erie Landing Page" width="40%">
-<img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/784/851/datas/gallery.jpg
-" alt="Project Erie Landing Page" width="40%">
+<img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/784/851/datas/gallery.jpg" alt="Project Erie Landing Page" width="40%">
 
 
 
