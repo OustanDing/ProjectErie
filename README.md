@@ -4,6 +4,9 @@ Often trash cleanups are efforts made on shore, ignoring the masses of garbage f
 
 _Our Landing Page_
 ![Project Erie Landing Page](https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/784/853/datas/gallery.jpg | width=400)
+<img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/784/853/datas/gallery.jpg" alt="alt text" width="400">
+
+
 
 ## What it does
 The app allows the users to crowdsource information about the current state of a body of water by providing details on locations of unwanted trash or algae blooms along with the severity. The platform we created also serves as an educational tool that informs the public of the actual state that our lakes are in and providing data for others who want to process the data in their own way.
