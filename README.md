@@ -2,9 +2,11 @@
 ## Inspiration
 Often trash cleanups are efforts made on shore, ignoring the masses of garbage floating in the middle of lakes and oceans. This doesn't just look bad, but affects the quality of water and the ecosystem of the body of water. Additionally we decided that algae blooms should be another point of focus due to their potential to spread and destroy ecosystems. These issues are especially prominent in Lake Erie, which was our main focus, having previous occurrences of algae blooms and of course, unwanted trash (it should be alarming that this is so common that it's a given). We wanted to provide the public not only a way to evaluate the magnitude of the problem at hand, but also a platform for them to contribute towards fixing this problem. 
 
-_Our Landing Page_
-<img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/784/853/datas/gallery.jpg" alt="Project Erie Landing Page" width="40%">
-<img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/784/851/datas/gallery.jpg" alt="Project Erie Landing Page" width="40%">
+<img src="https://i.imgur.com/Dbjnqxq.png" alt="Project Erie Landing Page" width="40%">
+<img src="https://i.imgur.com/uj4RK8E.png" alt="Project Erie Landing Page" width="40%">
+<br>
+<img src="https://i.imgur.com/oc6Im7k.png" width="40%">
+<img src="https://i.imgur.com/9GqYWeG.png" alt="Project Erie Landing Page" width="40%">
 
 
 
